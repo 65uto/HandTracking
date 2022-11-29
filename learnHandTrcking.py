@@ -37,13 +37,11 @@ while True:
                     pointX8.append(lmlist[id][1])
                     pointY8.append(lmlist[id][2])
                 
-                """ Access Line Point"""
+                """ Access Point"""
                 if ((pointX4[-1]-pointX8[-1]) < (pointX8[-1]-pointX4[-1])) and ((pointX8[-1]-pointX4[-1]) >= 0):
                     if (pointX8[-1]-pointX4[-1]) < 20 and (pointX8[-1]-pointX4[-1])>=0:
-                        #print(pointX8-pointX4)
                         cv2.line(image,(pointX8[-1],pointY8[-1]),(pointX4[-1],pointY4[-1]),(255,0,5),4)
                         show = ((pointX8[-1]-pointX4[-1])/20) * 100
-                        print(type(pointX8[-1]),pointX4[-1])
                         x = int((pointX4[-1] + pointX8[-1])/2)
                         y = int((pointY4[-1] + pointY8[-1])/2)
                         cv2.putText(image,str(int(show)), (x,y) ,0, 2.5,(255,100,0), 4)
