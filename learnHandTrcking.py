@@ -7,10 +7,10 @@ cap = cv2.VideoCapture(0)
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mpDraw = mp.solutions.drawing_utils
-pointX4 = 0
-pointX8 = 0
-pointY4 = 0
-pointY8 = 0
+pointX4 = [0]
+pointX8 = [0]
+pointY4 = [0]
+pointY8 = [0]
 
 while True:
     success, image = cap.read()
@@ -30,21 +30,23 @@ while True:
                 
                 if id == 4:
                     cv2.circle(image,(cx,cy), 25, (20,0,25), cv2.FILLED)
-                    pointX4 = lmlist[id][1]
-                    pointY4 = lmlist[id][2]
+                    pointX4.append(lmlist[id][1])
+                    pointY4.append(lmlist[id][2])
                 elif id == 8:
                     cv2.circle(image,(cx,cy), 25, (255,255,255), cv2.FILLED)
-                    pointX8 = lmlist[id][1]
-                    pointY8 = lmlist[id][2]
-
+                    pointX8.append(lmlist[id][1])
+                    pointY8.append(lmlist[id][2])
+                
                 """ Access Line Point"""
-                if (int(pointX4-pointX8) < int(pointX8-pointX4)) and int(pointX8-pointX4) >= 0:
-                    if (pointX8-pointX4) < 20 and (pointX8-pointX4)>=0:
+                if ((pointX4[-1]-pointX8[-1]) < (pointX8[-1]-pointX4[-1])) and ((pointX8[-1]-pointX4[-1]) >= 0):
+                    if (pointX8[-1]-pointX4[-1]) < 20 and (pointX8[-1]-pointX4[-1])>=0:
                         #print(pointX8-pointX4)
-                        cv2.line(image,(pointX8,pointY8),(pointX4,pointY4),(255,0,5),4)
-                        show = ((pointX8-pointX4)/20) * 100
-                        print(show)
-                        cv2.putText(image,str(int(show)), (pointX4+10,pointY4+10) ,0, 2.5,(255,100,0), 4)
+                        cv2.line(image,(pointX8[-1],pointY8[-1]),(pointX4[-1],pointY4[-1]),(255,0,5),4)
+                        show = ((pointX8[-1]-pointX4[-1])/20) * 100
+                        print(type(pointX8[-1]),pointX4[-1])
+                        x = int((pointX4[-1] + pointX8[-1])/2)
+                        y = int((pointY4[-1] + pointY8[-1])/2)
+                        cv2.putText(image,str(int(show)), (x,y) ,0, 2.5,(255,100,0), 4)
 
                                     
                 mpDraw.draw_landmarks(image,landmarks, mp_hands.HAND_CONNECTIONS)
