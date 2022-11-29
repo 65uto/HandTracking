@@ -37,7 +37,7 @@ while True:
                     pointX8.append(lmlist[id][1])
                     pointY8.append(lmlist[id][2])
                 
-                """ Access Line Point"""
+                """ Access Point"""
                 if ((pointX4[-1]-pointX8[-1]) < (pointX8[-1]-pointX4[-1])) and ((pointX8[-1]-pointX4[-1]) >= 0):
                     if (pointX8[-1]-pointX4[-1]) < 20 and (pointX8[-1]-pointX4[-1])>=0:
                         #print(pointX8-pointX4)
